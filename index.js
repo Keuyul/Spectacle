@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = process.env.token;
+const token = process.argv.length == 2 ? process.env.token : "";
 
 client.on('ready', () => {
   console.log('OPEN.');
@@ -47,7 +47,6 @@ client.on('message', (message) => {
       {name: '-ping', desc: 'pong'},
       {name: '-lol', desc: 'lol'},
       {name: '-spectalce', desc: 'spectacle bot 정보 보기'},
-      {name: '-전체공지', desc: 'dm으로 전체 embed 형식으로 공지 보내기'},
       {name: '-청소', desc: '텍스트 지움'},
     ];
     let commandStr = '';
@@ -66,14 +65,14 @@ client.on('message', (message) => {
     message.channel.send(embed)
   }
 
-else if(message.content.startsWith('!청소')) {
+else if(message.content.startsWith('-청소')) {
   if(message.channel.type == 'dm') {
     return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
   }
   
   if(message.channel.type != 'dm' && checkPermission(message)) return
 
-  var clearLine = message.content.slice('!청소 '.length);
+  var clearLine = message.content.slice('-청소 '.length);
   var isNum = !isNaN(clearLine)
 
   if(isNum && (clearLine <= 0 || 100 < clearLine)) {
@@ -125,6 +124,14 @@ function changeCommandStringLength(str, limitLen = 8) {
   }
 
   return tmp;
+}
+
+async function AutoMsgDelete(message, str, delay = 3000) {
+  let msg = await message.channel.send(str);
+
+  setTimeout(() => {
+    msg.delete();
+  }, delay);
 }
 
 
