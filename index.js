@@ -30,7 +30,7 @@ client.on('message', (message) => {
       .setAuthor('MADE BY KEUYUL', img, 'http://www.naver.com')
       .setThumbnail(img)
       .addBlankField()
-      .addField('Inline field title', 'Some value here')
+      .addField('BOTNAME', 'spectacle')
       .addField('Inline field title', 'Some value here', true)
       .addField('Inline field title', 'Some value here', true)
       .addField('Inline field title', 'Some value here', true)
@@ -65,7 +65,29 @@ client.on('message', (message) => {
     message.channel.send(embed)
   }
 
-else if(message.content.startsWith('-청소')) {
+  else if(message.content.startsWith('-전체공지')) {
+  if(checkPermission(message)) return
+  if(message.member != null) { // 채널에서 공지 쓸 때
+    let contents = message.content.slice('-전체공지'.length);
+    let embed = new Discord.RichEmbed()
+      .setAuthor('공지 of spectacle BOT')
+      .setColor('#00ffff')
+      .setFooter(`MADE BY KEUYUL`)
+      .setTimestamp()
+
+    embed.addField('공지: ', contents);
+
+    message.member.guild.members.array().forEach(x => {
+      if(x.user.bot) return;
+      x.user.send(embed)
+    });
+
+    return message.reply('공지를 전송했습니다.');
+  } else {
+    return message.reply('채널에서 실행해주세요.');
+  }
+
+} else if(message.content.startsWith('-청소')) {
   if(message.channel.type == 'dm') {
     return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
   }
