@@ -44,9 +44,10 @@ client.on('message', (message) => {
     let helpImg = 'https://i.imgur.com/M226hm8.png';
     let commandList = [
       {name: '-help', desc: '도움말보기'},
+      {name: '-spectalce', desc: 'spectacle bot 정보 보기'},
       {name: '-ping', desc: 'pong'},
       {name: '-lol', desc: 'lol'},
-      {name: '-spectalce', desc: 'spectacle bot 정보 보기'},
+      {name: '-전체공지', desc: 'dm으로 전체 embed 형식으로 공지 보내기'},
       {name: '-청소', desc: '텍스트 지움'},
     ];
     let commandStr = '';
